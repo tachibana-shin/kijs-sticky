@@ -1,4 +1,4 @@
-import kijs, { Kijs, each } from "kijs";
+import kijs, { Kijs, each, extend, ready } from "kijs";
 
 const defaults = {
   topSpacing: <number>0,
