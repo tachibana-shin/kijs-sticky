@@ -1,6 +1,6 @@
 {
   "name": "kijs-sticky",
-  "version": "0.0.1",
+  "version": "1.0.4",
   "author": "Tachibana Shin <thanhnguyennguyen1995@gmail.com>",
   "main": "dist/kijs-sticky.esm.js",
   "exports": {
