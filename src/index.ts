@@ -1,4 +1,4 @@
-import kijs, { Kijs, each, extend, ready } from "kijs";
+import kijs, { each, extend, Kijs, ready } from "kijs";
 
 const defaults = {
   topSpacing: <number>0,
@@ -16,14 +16,16 @@ const $window = kijs(window),
   $document = kijs(document),
   sticked = new Set<
     Options & {
-      stickyElement: Kijs;
-      stickyWrapper: Kijs;
+      readonly stickyElement: Kijs;
+      readonly stickyWrapper: Kijs;
+      // eslint-disable-next-line functional/prefer-readonly-type
       currentTop: number | void;
     }
   >();
+// eslint-disable-next-line functional/no-let
 let windowHeight = $window.height();
 
-function scroller() : void {
+function scroller(): void {
   const scrollTop = $window.scrollTop(),
     documentHeight = $document.height(),
     dwh = documentHeight - windowHeight,
@@ -48,9 +50,11 @@ function scroller() : void {
           .parent()
           .removeClass(s.className);
         s.stickyElement.trigger("sticky-end", [s]);
+        // eslint-disable-next-line functional/immutable-data
         s.currentTop = void 0;
       }
     } else {
+      // eslint-disable-next-line functional/no-let
       let newTop =
         documentHeight -
         s.stickyElement.outerHeight() -
@@ -64,6 +68,7 @@ function scroller() : void {
         newTop = s.topSpacing;
       }
       if (s.currentTop !== newTop) {
+        // eslint-disable-next-line functional/no-let
         let newWidth;
         if (s.getWidthFrom) {
           newWidth = kijs(s.getWidthFrom).width() || void 0;
@@ -106,6 +111,7 @@ function scroller() : void {
           s.stickyElement.trigger("sticky-bottom-unreached", [s]);
         }
 
+        // eslint-disable-next-line functional/immutable-data
         s.currentTop = newTop;
       }
 
@@ -133,10 +139,11 @@ function scroller() : void {
     }
   });
 }
-function resizer() : void {
+function resizer(): void {
   windowHeight = $window.height();
 
   sticked.forEach((s) => {
+    // eslint-disable-next-line functional/no-let
     let newWidth;
     if (s.getWidthFrom) {
       if (s.responsiveWidth) {
@@ -150,9 +157,15 @@ function resizer() : void {
     }
   });
 }
-function sticky<T = HTMLElement>(elems: ArrayLike<T>, options: Options): void {
+function sticky<T = HTMLElement>(
+  elems: ArrayLike<T>,
+  options: Partial<Options>
+): void {
   const o = extend({}, defaults, options);
   each(elems, (elem) => {
+    if (elem instanceof Node === false) {
+      return;
+    }
     const stickyElement = kijs(elem);
 
     const stickyId = stickyElement.attr("id");
@@ -179,14 +192,17 @@ function sticky<T = HTMLElement>(elems: ArrayLike<T>, options: Options): void {
       stickyElement.css({ float: "none" }).parent().css({ float: "right" });
     }
 
+    // eslint-disable-next-line functional/immutable-data
     o.stickyElement = stickyElement;
+    // eslint-disable-next-line functional/immutable-data
     o.stickyWrapper = stickyWrapper;
+    // eslint-disable-next-line functional/immutable-data
     o.currentTop = void 0;
 
     sticked.add(o);
 
     setWrapperHeight(elem);
-    setupChangeListeners(elem);
+    setupChangeListeners(elem as unknown as Node);
   });
 }
 
@@ -195,7 +211,7 @@ function setWrapperHeight<T = HTMLElement>(stickyElement: T): void {
   element.parent().css("height", element.outerHeight());
 }
 
-function setupChangeListeners<T = HTMLElement>(stickyElement: T): void {
+function setupChangeListeners(stickyElement: Node): void {
   if (typeof MutationObserver !== "undefined") {
     const mutationObserver = new MutationObserver((mutations) => {
       if (mutations[0].addedNodes.length || mutations[0].removedNodes.length) {
@@ -218,9 +234,10 @@ function setupChangeListeners<T = HTMLElement>(stickyElement: T): void {
 
 function unstick<T = HTMLElement>(elems: ArrayLike<T>): void {
   each(elems, (elem) => {
+    // eslint-disable-next-line functional/no-let
     let removed = false;
     sticked.forEach((s) => {
-      if (s.stickyElement.get(0) === elem) {
+      if (s.stickyElement.get(0) === (elem as unknown as HTMLElement)) {
         sticked.delete(s);
         removed = true;
       }
@@ -245,23 +262,32 @@ declare module "kijs" {
 }
 
 function installer(Ki: typeof Kijs) {
-  $window.on("scroll", scroller).on("resize", resizer);
+  $window.one("scroll", scroller).on("resize", resizer);
 
+  // eslint-disable-next-line functional/immutable-data
   Ki.prototype.sticky = function (options?) {
-    init(this, options);
+    sticky(this, options || {});
 
     return this;
   };
 
+  // eslint-disable-next-line functional/immutable-data
   Ki.prototype.unstick = function () {
     unstick(this);
 
     return this;
   };
 
-  ready(() => setTimeout(scroller, 0));
+  ready(() => void setTimeout(scroller, 0));
 }
 
 export default installer;
-export { sticky, unstick, sticked, scroller, resizer, defaults as OptionsDefault };
+export {
+  sticky,
+  unstick,
+  sticked,
+  scroller,
+  resizer,
+  defaults as OptionsDefault,
+};
 export type { Options };

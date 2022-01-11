@@ -74,5 +74,6 @@
       "wonu",
       "xiino",
       "zeto"
-   ]
+],
+"typescript.tsdk": "node_modules/typescript/lib"
 }

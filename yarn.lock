@@ -3209,10 +3209,10 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-kijs@^0.0.2-b32:
-  version "0.0.2-b32"
-  resolved "https://registry.yarnpkg.com/kijs/-/kijs-0.0.2-b32.tgz#0434cc0963fa653db059c59dc206728c8cfda695"
-  integrity sha512-op0JuMvT/aVncPPEhOAyXUsxzNFFP82VCUzBq6aoUkO3xId8125gpIwbjxqKX/sVFI6+YwCmMJGrEJZL2IIbVQ==
+kijs@^0.0.2-b37:
+  version "0.0.2-b37"
+  resolved "https://registry.yarnpkg.com/kijs/-/kijs-0.0.2-b37.tgz#9171dcd5546ad7d9d0194f39dca2e79b0de2e09a"
+  integrity sha512-LDMCvUZ8PY2+Xbd2fbDKLRJRF3Y4MzRVtn4GigLejnOMWdLnuDSc0e2fovlghbOQZsJW/tFB/IrtYBrwOaLIow==
 
 kleur@^3.0.3:
   version "3.0.3"
@@ -4361,10 +4361,10 @@ typedoc@^0.22.4:
     minimatch "^3.0.4"
     shiki "^0.9.12"
 
-typescript@^4.2.4:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
-  integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
+typescript@^4.6.0-dev.20220111:
+  version "4.6.0-dev.20220111"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.0-dev.20220111.tgz#6ebe323b067fdd7ec02e7cc2863009ea181fd184"
+  integrity sha512-Xevo7lNQivH7sLYoBmDiubjROWvTrVmcyP2h3iO/WZAmFf3vum9KSldMAphZys6Jkq3WbCwBCJvvNx2Pdix8cQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
