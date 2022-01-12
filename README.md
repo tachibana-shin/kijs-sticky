@@ -19,4 +19,10 @@ CDN:
 ## Example
 ``` ts
 // your example
+import kijs, { use } from "kijs";
+import Sticky from "kijs-sticky";
+
+use(Sticky);
+
+kijs(".install-button").sticky();
 ```
